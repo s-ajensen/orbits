@@ -9,13 +9,13 @@
 </script>
 
 <li>
-    <MenuItem {root} {body} on:change />
+    <MenuItem {body} on:change on:updateSelectedBody />
 </li>
 
 <ul>
 {#if body.children}
     {#each body.children as child}
-        <svelte:self {root} body={child} on:change />
+        <svelte:self {root} body={child} on:change on:updateSelectedBody />
     {/each}
 {/if}
 </ul>

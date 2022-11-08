@@ -1,19 +1,26 @@
 <script>
     import { afterUpdate, createEventDispatcher, onMount } from "svelte";
     import Body from "../models/Body";
+    import { RGBAToHexA } from "../helpers/colorConverter"
 
     const ENTER_KEY = 13;
     const dispatch = createEventDispatcher();
 
     export let body;
-    export let root;
     let addChild = false;
+    let remove = false;
     let newChildInput;
 
     afterUpdate(() => {
         if (addChild) {
             newChildInput.focus();
             newChildInput.select();
+        }
+
+        if (remove) {
+            let index = body.parent.children.indexOf(body);
+            body.parent.children.splice(index, 1);
+            dispatch('change');
         }
     })
 
@@ -23,15 +30,16 @@
             body.addChild(new Body(newChildInput.value, 
                                 Math.random()*50,
                                 (Math.random()*500) + 20,Math.random()*1000,
-                                `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.97`));
+                                RGBAToHexA(`rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.97`)));
             dispatch('change');
         }
     }
 </script>
 
 <div class="grid-container">
-    <p>{body.name} </p>
+    <p on:click={() => {dispatch('updateSelectedBody', {body: body})}}>{body.name} </p>
     <button on:click={() => {addChild = true}}>+</button>
+    <button on:click={() => {remove = true}}>🗑</button>
 </div>
 
 {#if addChild}  
@@ -45,7 +53,7 @@
 <style>
     .grid-container {
       display: grid;
-      grid-template-columns: 10fr 1fr;
+      grid-template-columns: 10fr 1fr 1fr;
     }
 
     p {
