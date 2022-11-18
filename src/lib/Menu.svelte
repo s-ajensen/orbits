@@ -20,14 +20,10 @@
 
 <div class="menu-container">
     <div class="menu">
+        <button on:click={toggle}>{#if isPlaying.val}⏸️{:else}▶️{/if}</button>
 
-        {#if isPlaying.val}
-            <button on:click={toggle}>Pause</button>
-        {:else}
-            <button on:click={toggle}>Play</button>
-        {/if}
         <br />
-    
+
         <ul>
             <TreeItem {root} body={root} on:updateSelectedBody={(event) => {selectedBody = event.detail.body; console.log("hey")}} on:change={updateHierarchy} />
         </ul>
