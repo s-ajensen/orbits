@@ -49,6 +49,19 @@
 
     .menu {
         flex: 1;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid grey;
+        border-radius: 4px;
+    }
+
+    .menu button {
+        width: 187px;
+        height: 187px;
+        font-size: 6em;
+        border: 0 none;
+        background: transparent;
+        padding: 0;
     }
 
     div {
